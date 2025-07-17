@@ -13,6 +13,7 @@ export class MainComponent {
   authenticated = false;
   isUser = false;
   isAdmin = false;
+  weatherData: any;
 
   constructor(
     private authService: AuthorizationService,
@@ -24,6 +25,7 @@ export class MainComponent {
       console.log(roles.includes('ADMIN'));
       this.isUser = roles.includes('USER');
       this.isAdmin = roles.includes('ADMIN');
+
     }
   }
 
@@ -31,9 +33,11 @@ export class MainComponent {
     this.http.get('http://localhost:5159/weatherforecast').subscribe({
       next: (response) => {
         console.log(response);
+        this.weatherData =JSON.stringify(response);
       },
       error: (err) => {
         console.log(err);
+        this.weatherData = err;
       },
     });
     ///admin/realms
