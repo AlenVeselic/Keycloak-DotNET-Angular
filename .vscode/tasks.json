@@ -1,0 +1,46 @@
+{
+  "tasks": [
+    {
+      "label": "Docker Folder 2",
+      "type": "process",
+      "command": "docker",
+      "args": ["compose", "up"],
+      "options": {
+        "cwd": "${workspaceFolder}/net9API"
+      },
+      "presentation": {
+        "group": "example"
+      }
+    },
+    {
+      "label": "NPM Start",
+      "type": "process",
+      "command": "npm",
+      "args": ["start"],
+      "options": {
+        "cwd": "${workspaceFolder}/Client"
+      },
+      "presentation": {
+        "group": "example"
+      }
+    },
+    {
+      "label": "C# API Debug",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["watch", "run"],
+      "options": {
+        "cwd": "${workspaceFolder}/net9API"
+      },
+      "presentation": {
+        "group": "example"
+      }
+    },
+    {
+      "label": "Run all projects",
+      "dependsOn": ["Docker Folder 2", "NPM Start", "C# API Debug"],
+      "dependsOrder": "parallel",
+      "type": "shell"
+    }
+  ]
+}
