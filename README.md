@@ -1,16 +1,10 @@
-# DotNet-Angular-Keycloak-Demo
+# Full stack application with auth (.NET 9 - Angular 20 - Keycloak)
 
-This project is a simple demo on how **Keycloak** is integrated for authentication in an Angular 20+ frontend and a .NET Core 9 backend.
+This project is a simple template of a full stack application that integrates **Keycloak** as auth. The stack includes a **.NET9 API** and an **Angular 20** frontend.
 
-Based on [This repository](https://github.com/hristijanZdravev/DotNet-Angular-Keycloak-Demo). Updated with realm provisioning, .NET 9 and Angular 20.
+## Original repository
 
-## Tutorials Used
-
-- Step-by-step guide for setting up Keycloak OAuth2 in Angular and .NET Core:  
-  [Miloš Željko's Tutorial](https://miloszeljko.com/step-by-step-guide-setting-up-keycloak-oauth2-in-angular-and-net-core-for-secure-authentication/)
-
-- Help for implementing Keycloak in Angular 18+:  
-  [Pretius Blog on Keycloak Angular Integration](https://pretius.com/blog/keycloak-angular-integration/)
+[Original repository](https://github.com/hristijanZdravev/DotNet-Angular-Keycloak-Demo).
 
 ## Keycloak Angular Package
 
@@ -19,9 +13,13 @@ NPM Package: [keycloak-angular](https://www.npmjs.com/package/keycloak-angular)
 
 ## Features
 
-- Secure authentication using OAuth2 with Keycloak
-- Integration with Angular's standalone components
-- Backend API secured with Keycloak
+- Secure authentication using OAuth2 with Keycloak,
+- Realm provisioning,
+- Integration with Angular's standalone components,
+- Example of role based authorization,
+  - Locked API endpoint bsed on role,
+  - Display users based on user role within keycloak,
+- Backend API secured with Keycloak.
 
 ## Setup Instructions
 
@@ -35,7 +33,7 @@ The backend API is set up in Visual Studio Code. To get started, follow these st
 
 ### 2. Frontend (Angular)
 
-## Prerequisites:
+#### Prerequisites:
 
 - Node 22.12
 - Angular CLI installed (`npm i -g @angular/cli`)
@@ -49,7 +47,7 @@ To start the Angular app:
 
 ### 3. Keycloak Setup with Docker Compose
 
-## Prerequisites
+#### Prerequisites
 
 - Docker
 - Docker compose
@@ -67,9 +65,24 @@ To start Keycloak using Docker:
 
    - You can also run it without -d if you like logs.
 
-4. Due to the volumes line, the realm shoudl be automatically provisioned.
-5. Add a user to the my-realm realm.
+4. Due to the volumes line, the realm should be automatically provisioned.
+5. Log into keycloak as admin and navigate to the my-realm realm.
+6. Add a user to the my-realm realm.
+
    - add a password in the User's credentials tab,
    - Navigate to Role Mappings, here you can assign either the ADMIN or USER roles.
    - Whenever your change the role, you can refresh the Angular frontend and see that the roles have change.
+
      - With the network tab open on the Home page, you can also see if your user's authorization challenge succeeds or not on the backend.
+       - This data has now been added to the ADMIN user homepage.
+
+   - If you assign your test user the view-users role, the angular client also displays the users on the homepage.
+
+### 4. Running all projects with a VS Code task
+
+If you've succesfully built all the projects and are using VS Code, you can run all the project using the configured tasks.
+
+1. Use the keyboard shortcut `CTRL + SHIFT + P`,
+2. Search tasks and find `Run tasks`,
+3. Run the `Run all projects` task
+4. This should open 3 terminals in parallel and display all the pieces of the project in their own window.
