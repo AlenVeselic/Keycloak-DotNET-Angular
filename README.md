@@ -86,3 +86,15 @@ If you've succesfully built all the projects and are using VS Code, you can run 
 2. Search tasks and find `Run tasks`,
 3. Run the `Run all projects` task
 4. This should open 3 terminals in parallel and display all the pieces of the project in their own window.
+
+## Windows issues
+
+### npm start error: An unhandled exception occurred: listen EACCES: permission denied ::1:4200
+
+TL;DR solution: Restart your Windows NAT driver
+
+1. `Open powershell as admin`
+2. `net stop winnat`
+3. `net start winnat`
+
+[solution source](https://stackoverflow.com/questions/60485038/ng-server-listen-eacces-permission-denied-127-0-0-14200)
