@@ -10,6 +10,12 @@
   </div>
   }
   <h1>Weather Data</h1>
+  @if(weatherDataError) {
+  <div>
+    <p>No weather data available.</p>
+  </div>
+  } @else {
+  <!-- Iterate through each date in the weather data -->
   @for(date of weatherData; track date; let i = $index) {
   <div>
     <p>
@@ -19,19 +25,38 @@
       }
     </p>
   </div>
-  }
+  } }
   <h1>Users</h1>
+  @if(usersError) {
+  <div>
+    <p>No users available.</p>
+  </div>
+  } @else {
+  <!-- Iterate through each user received -->
   @for(user of users; track user; let i = $index) {
   <div>
     <p style="display: inline-block; margin-right: 20px">
       @for(item of user | keyvalue; track item) {
+      <!-- Check if item.value is an object and has properties -->
+
+      @if( typeof item.value == "object" && item.value && (item.value |
+      keyvalue).length > 0) {
+      <!-- If it is an object, iterate over its properties -->
+      @for(subValue of item.value | keyvalue; track subValue) {
+      <b>{{ subValue.key }}</b
+      >: {{ subValue.value }}
+      }
+      <!-- If the sub value is not an object, display the value directly -->
+      } @else {
+
       <b>{{ item.key }}</b
       >: {{ item.value }}
-      }
+      } }
     </p>
   </div>
-  }
+  } }
 </div>
+
 } @else {
 <div>
   <h1>Welcome, anonymous user!</h1>
