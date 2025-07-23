@@ -2387,7 +2387,7 @@
           "value": "admin"
         }
       ],
-      "realmRoles": ["ADMIN"]
+      "realmRoles": ["ADMIN", "default-roles-my-realm"]
     },
     {
       "username": "userexample",
@@ -2402,7 +2402,7 @@
           "value": "user"
         }
       ],
-      "realmRoles": ["USER"]
+      "realmRoles": ["USER", "default-roles-my-realm"]
     },
     {
       "username": "usermanagementexample",
@@ -2417,6 +2417,7 @@
           "value": "usermanagement"
         }
       ],
+      "realmRoles": ["default-roles-my-realm"],
       "clientRoles": { "realm-management": ["view-users"] }
     },
     {
@@ -2432,7 +2433,7 @@
           "value": "allroles"
         }
       ],
-      "realmRoles": ["ADMIN", "USER"],
+      "realmRoles": ["ADMIN", "USER", "default-roles-my-realm"],
       "clientRoles": { "realm-management": ["view-users"] }
     },
     {
@@ -2442,6 +2443,7 @@
       "firstName": "",
       "lastName": "",
       "email": "",
+      "realmRoles": ["default-roles-my-realm"],
       "credentials": [
         {
           "type": "password",
