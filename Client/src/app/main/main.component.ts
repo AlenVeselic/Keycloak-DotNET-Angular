@@ -12,10 +12,6 @@ enum RestApiEndpoint {
   WEATHER_FORECAST = 'http://localhost:5159/weatherforecast',
 }
 
-enum KeycloakAdminEndpoint {
-  VIEW_USERS = 'http://localhost:28080/admin/realms/my-realm/users',
-}
-
 @Component({
   selector: 'app-main',
   imports: [CommonModule],
@@ -29,9 +25,6 @@ export class MainComponent {
 
   weatherData: any;
   weatherDataError = false;
-
-  users: any;
-  usersError = false;
 
   constructor(
     private authService: AuthorizationService,
@@ -56,22 +49,6 @@ export class MainComponent {
         console.log(err);
         this.weatherDataError = true;
         this.weatherData = err;
-      },
-    });
-
-    ///admin/view-users
-    // view-users role from client roles
-    this.usersError = false;
-    this.http.get<any[]>(KeycloakAdminEndpoint.VIEW_USERS).subscribe({
-      next: (response) => {
-        console.log(response);
-
-        this.users = response;
-      },
-      error: (err) => {
-        console.log(err);
-        this.users = JSON.stringify(err);
-        this.usersError = true;
       },
     });
   }
