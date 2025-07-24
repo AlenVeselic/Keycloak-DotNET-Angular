@@ -15,9 +15,11 @@ import { RouterModule } from '@angular/router';
 })
 export class NavbarComponent {
   authenticated: boolean;
+  isUserManager: boolean;
 
   constructor(private authService: AuthorizationService, private http: HttpClient) {
     this.authenticated = this.authService.isLoggedIn();
+    this.isUserManager = this.authService.getUserRoles().includes("view-users");
 
   }
 
