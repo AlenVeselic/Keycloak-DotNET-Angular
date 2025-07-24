@@ -8,10 +8,6 @@ enum UserRole {
   ADMIN = 'ADMIN',
 }
 
-enum RestApiEndpoint {
-  WEATHER_FORECAST = 'http://localhost:5159/weatherforecast',
-}
-
 @Component({
   selector: 'app-main',
   imports: [CommonModule],
@@ -23,13 +19,7 @@ export class MainComponent {
   isUser = false;
   isAdmin = false;
 
-  weatherData: any;
-  weatherDataError = false;
-
-  constructor(
-    private authService: AuthorizationService,
-    private http: HttpClient
-  ) {
+  constructor(private authService: AuthorizationService) {
     this.authenticated = this.authService.isLoggedIn();
     if (this.authenticated) {
       const roles = this.authService.getUserRoles();
@@ -38,18 +28,5 @@ export class MainComponent {
     }
   }
 
-  // ADMIN role from realm roles
-  ngOnInit() {
-    this.http.get(RestApiEndpoint.WEATHER_FORECAST).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.weatherData = response;
-      },
-      error: (err) => {
-        console.log(err);
-        this.weatherDataError = true;
-        this.weatherData = err;
-      },
-    });
-  }
+  ngOnInit() {}
 }

@@ -1,11 +1,33 @@
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+
+enum RestApiEndpoint {
+  WEATHER_FORECAST = 'http://localhost:5159/weatherforecast',
+}
 
 @Component({
   selector: 'app-weather',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './weather.component.html',
-  styleUrl: './weather.component.css'
+  styleUrl: './weather.component.css',
 })
 export class WeatherComponent {
-
+  weatherData: any;
+  weatherDataError = false;
+  constructor(private http: HttpClient) {}
+  ngOnInit() {
+    // ADMIN role from realm roles
+    this.http.get(RestApiEndpoint.WEATHER_FORECAST).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.weatherData = response;
+      },
+      error: (err) => {
+        console.log(err);
+        this.weatherDataError = true;
+        this.weatherData = err;
+      },
+    });
+  }
 }

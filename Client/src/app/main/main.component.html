@@ -9,23 +9,6 @@
     <h1>Admin Content</h1>
   </div>
   }
-  <h1>Weather Data</h1>
-  @if(weatherDataError) {
-  <div>
-    <p>No weather data available.</p>
-  </div>
-  } @else {
-  <!-- Iterate through each date in the weather data -->
-  @for(date of weatherData; track date; let i = $index) {
-  <div>
-    <p>
-      @for(item of date | keyvalue; track item) {
-      <b>{{ item.key }}</b
-      >: {{ item.value }}
-      }
-    </p>
-  </div>
-  } }
 </div>
 
 } @else {

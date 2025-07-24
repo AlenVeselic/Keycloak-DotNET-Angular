@@ -17,10 +17,7 @@ export class UsersComponent {
   users: any;
   usersError = false;
 
-  constructor(
-    private authService: AuthorizationService,
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     ///admin/view-users
