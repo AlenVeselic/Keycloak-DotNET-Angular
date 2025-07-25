@@ -5,25 +5,95 @@
 </div>
 } @else {
 <!-- Iterate through each user received -->
-@for(user of users; track user; let i = $index) {
 <div>
-  <p style="display: inline-block; margin-right: 20px">
-    @for(item of user | keyvalue; track item) {
-    <!-- Check if item.value is an object and has properties -->
+  <table mat-table [dataSource]="users" class="mat-elevation-z8">
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
 
-    @if( typeof item.value == "object" && item.value && (item.value |
-    keyvalue).length > 0) {
-    <!-- If it is an object, iterate over its properties -->
-    @for(subValue of item.value | keyvalue; track subValue) {
-    <b>{{ subValue.key }}</b
-    >: {{ subValue.value }}
-    }
-    <!-- If the sub value is not an object, display the value directly -->
-    } @else {
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>id</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
 
-    <b>{{ item.key }}</b
-    >: {{ item.value }}
-    } }
-  </p>
+    <!-- Name Column -->
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef>username</th>
+      <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="emailVerified">
+      <th mat-header-cell *matHeaderCellDef>emailVerified</th>
+      <td mat-cell *matCellDef="let element">{{ element.emailVerified }}</td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="userProfileMetadata">
+      <th mat-header-cell *matHeaderCellDef>userProfileMetadata</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.userProfileMetadata | json }}
+      </td>
+    </ng-container>
+
+    <!-- enabled Column -->
+    <ng-container matColumnDef="enabled">
+      <th mat-header-cell *matHeaderCellDef>enabled</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.enabled }}
+      </td>
+    </ng-container>
+
+    <!-- enabled Column -->
+    <ng-container matColumnDef="totp">
+      <th mat-header-cell *matHeaderCellDef>totp</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.totp }}
+      </td>
+    </ng-container>
+
+    <!-- enabled Column -->
+    <ng-container matColumnDef="disableableCredentialTypes">
+      <th mat-header-cell *matHeaderCellDef>disableableCredentialTypes</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.disableableCredentialTypes }}
+      </td>
+    </ng-container>
+
+    <!-- enabled Column -->
+    <ng-container matColumnDef="requiredActions">
+      <th mat-header-cell *matHeaderCellDef>requiredActions</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.requiredActions }}
+      </td>
+    </ng-container>
+
+    <!-- enabled Column -->
+    <ng-container matColumnDef="notBefore">
+      <th mat-header-cell *matHeaderCellDef>notBefore</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.notBefore }}
+      </td>
+    </ng-container>
+
+    <!-- access Column -->
+    <ng-container matColumnDef="access">
+      <th mat-header-cell *matHeaderCellDef>access</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.access | json }}
+      </td>
+    </ng-container>
+
+    <!-- attributes Column -->
+    <ng-container matColumnDef="attributes">
+      <th mat-header-cell *matHeaderCellDef>attributes</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.attributes | json }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="userKeys"></tr>
+    <tr mat-row *matRowDef="let row; columns: userKeys"></tr>
+  </table>
 </div>
-} }
+}
