@@ -65,28 +65,21 @@ export class UsersComponent {
                       (role: { name: string }) => role.name
                     ) || [])
                   );
-                  console.log(
-                    'Realm roles for user:',
-                    user.username,
-                    user.roles
-                  );
                 }
                 if (
                   rolesResponse.clientMappings &&
-                  rolesResponse.clientMappings['realm-management']
+                  Object.values(rolesResponse.clientMappings).length > 0
                 ) {
-                  user.roles.push(
-                    ...(rolesResponse.clientMappings[
-                      'realm-management'
-                    ]?.mappings.map((role: { name: string }) => role.name) ||
-                      [])
-                  );
-                  console.log(
-                    'Client roles for user:',
-                    user.username,
-                    user.roles
-                  );
+                  let clients = Object.keys(rolesResponse.clientMappings);
+                  for (const client of clients) {
+                    user.roles.push(
+                      ...(rolesResponse.clientMappings[client]?.mappings.map(
+                        (role: { name: string }) => role.name
+                      ) || [])
+                    );
+                  }
                 }
+                console.log('User roles:', user.roles);
               },
               error: (err) => {
                 console.error('Error fetching user roles:', err);
