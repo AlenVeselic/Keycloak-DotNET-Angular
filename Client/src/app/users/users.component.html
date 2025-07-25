@@ -10,87 +10,14 @@
     <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>id</th>
-      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-    </ng-container>
+    @for( regularCell of regularCellKeys; track regularCell) {
+    <!-- Regular cell content can be added here -->
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="username">
-      <th mat-header-cell *matHeaderCellDef>username</th>
-      <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+    <ng-container [matColumnDef]="regularCell">
+      <th mat-header-cell *matHeaderCellDef>{{ regularCell }}</th>
+      <td mat-cell *matCellDef="let element">{{ element[regularCell] }}</td>
     </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="emailVerified">
-      <th mat-header-cell *matHeaderCellDef>emailVerified</th>
-      <td mat-cell *matCellDef="let element">{{ element.emailVerified }}</td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="userProfileMetadata">
-      <th mat-header-cell *matHeaderCellDef>userProfileMetadata</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.userProfileMetadata | json }}
-      </td>
-    </ng-container>
-
-    <!-- enabled Column -->
-    <ng-container matColumnDef="enabled">
-      <th mat-header-cell *matHeaderCellDef>enabled</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.enabled }}
-      </td>
-    </ng-container>
-
-    <!-- enabled Column -->
-    <ng-container matColumnDef="totp">
-      <th mat-header-cell *matHeaderCellDef>totp</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.totp }}
-      </td>
-    </ng-container>
-
-    <!-- enabled Column -->
-    <ng-container matColumnDef="disableableCredentialTypes">
-      <th mat-header-cell *matHeaderCellDef>disableableCredentialTypes</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.disableableCredentialTypes }}
-      </td>
-    </ng-container>
-
-    <!-- enabled Column -->
-    <ng-container matColumnDef="requiredActions">
-      <th mat-header-cell *matHeaderCellDef>requiredActions</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.requiredActions }}
-      </td>
-    </ng-container>
-
-    <!-- enabled Column -->
-    <ng-container matColumnDef="notBefore">
-      <th mat-header-cell *matHeaderCellDef>notBefore</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.notBefore }}
-      </td>
-    </ng-container>
-
-    <!-- access Column -->
-    <ng-container matColumnDef="access">
-      <th mat-header-cell *matHeaderCellDef>access</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.access | json }}
-      </td>
-    </ng-container>
-
-    <!-- attributes Column -->
-    <ng-container matColumnDef="attributes">
-      <th mat-header-cell *matHeaderCellDef>attributes</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.attributes | json }}
-      </td>
-    </ng-container>
+    }
 
     <!-- attributes Column -->
     <ng-container matColumnDef="roles">

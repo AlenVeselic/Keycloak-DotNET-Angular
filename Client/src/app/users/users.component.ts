@@ -18,6 +18,17 @@ export class UsersComponent {
   users: any;
   usersError = false;
   userKeys: string[] = [];
+  regularCellKeys: string[] = [
+    'id',
+    'username',
+    'emailVerified',
+    'enabled',
+    'totp',
+  ];
+
+  arrayCellKeys: string[] = ['roles'];
+
+  todoColumns: string[] = ['requiredActions'];
 
   constructor(private http: HttpClient) {}
 
@@ -35,7 +46,7 @@ export class UsersComponent {
           delete this.users[0]['requiredActions'];
           delete this.users[0]['access'];
           delete this.users[0]['notBefore'];
-          this.userKeys = Object.keys({ ...this.users[0], roles: [] });
+          this.userKeys = [...this.regularCellKeys, ...this.arrayCellKeys];
         }
 
         for (const user of this.users) {
