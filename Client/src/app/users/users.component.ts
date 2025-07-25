@@ -16,6 +16,7 @@ enum KeycloakAdminEndpoint {
 export class UsersComponent {
   users: any;
   usersError = false;
+  userKeys: string[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -26,6 +27,9 @@ export class UsersComponent {
     this.http.get<any[]>(KeycloakAdminEndpoint.VIEW_USERS).subscribe({
       next: (response) => {
         this.users = response;
+        if(this.users.length > 0){
+          this.userKeys = Object.keys(this.users[0])
+        }
       },
       error: (err) => {
         this.users = JSON.stringify(err);
