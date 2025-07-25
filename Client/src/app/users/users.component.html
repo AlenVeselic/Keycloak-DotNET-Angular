@@ -92,6 +92,14 @@
       </td>
     </ng-container>
 
+    <!-- attributes Column -->
+    <ng-container matColumnDef="roles">
+      <th mat-header-cell *matHeaderCellDef>roles</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.roles ? element.roles.join(", ") : "No roles assigned" }}
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="userKeys"></tr>
     <tr mat-row *matRowDef="let row; columns: userKeys"></tr>
   </table>
