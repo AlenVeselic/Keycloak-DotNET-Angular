@@ -10,14 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { EditUserRolesDialogComponent } from './edit-user-roles-dialog/edit-user-roles-dialog.component';
-
-enum KeycloakAdminEndpoint {
-  VIEW_USERS = 'http://localhost:28080/admin/realms/my-realm/users',
-  USER_ROLES = 'http://localhost:28080/admin/realms/my-realm/users/{userId}/role-mappings',
-  ALL_REALM_ROLES = 'http://localhost:28080/admin/realms/my-realm/roles',
-  ALL_CLIENT_ROLES = 'http://localhost:28080/admin/realms/my-realm/clients/{client-uuid}/roles',
-  ALL_CLIENTS = 'http://localhost:28080/admin/realms/my-realm/clients',
-}
+import { KeycloakAdminEndpoint } from '../_auth/models/keycloak-admin-endpoint';
 @Component({
   selector: 'app-users',
   imports: [
@@ -179,7 +172,7 @@ export class UsersComponent {
 
   editUserRoles(user: any) {
     // Logic to edit user roles
-    console.log('Edit roles for user:', user);
+    console.log('Edit roles for user:', user, this.allRoles);
     const dialogRef = this.dialog.open(EditUserRolesDialogComponent, {
       width: '400px',
       data: { user, allRoles: this.allRoles },
