@@ -3,6 +3,7 @@ import { AuthorizationService } from '../_auth/authorization.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 enum KeycloakAdminEndpoint {
   VIEW_USERS = 'http://localhost:28080/admin/realms/my-realm/users',
@@ -10,7 +11,7 @@ enum KeycloakAdminEndpoint {
 }
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, MatTableModule],
+  imports: [CommonModule, MatTableModule, MatButtonModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
 })
@@ -46,7 +47,11 @@ export class UsersComponent {
           delete this.users[0]['requiredActions'];
           delete this.users[0]['access'];
           delete this.users[0]['notBefore'];
-          this.userKeys = [...this.regularCellKeys, ...this.arrayCellKeys];
+          this.userKeys = [
+            ...this.regularCellKeys,
+            ...this.arrayCellKeys,
+            'actions',
+          ];
         }
 
         for (const user of this.users) {
