@@ -31,7 +31,9 @@
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let element">
         <div>
-          <button mat-button>Edit roles</button>
+          <button mat-button (click)="editUserRoles(element)">
+            Edit roles
+          </button>
           <!-- <button mat-button>Delete</button> -->
         </div>
       </td>

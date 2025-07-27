@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{ data.user.username }} roles</h2>
+<mat-dialog-content>
+  <p>All Roles</p>
+  <mat-form-field>
+    <mat-label>Roles</mat-label>
+    <mat-select [(ngModel)]="data.user.roles" multiple>
+      @for(role of parsedAllRoles; track role) {
+      <mat-option [value]="role">{{ role }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="onNoClick()">No Thanks</button>
+  <button matButton (click)="saveChanges()" cdkFocusInitial>Save</button>
+</mat-dialog-actions>

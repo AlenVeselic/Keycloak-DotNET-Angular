@@ -5,6 +5,11 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { lastValueFrom } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
+import { EditUserRolesDialogComponent } from './edit-user-roles-dialog/edit-user-roles-dialog.component';
 
 enum KeycloakAdminEndpoint {
   VIEW_USERS = 'http://localhost:28080/admin/realms/my-realm/users',
@@ -15,7 +20,15 @@ enum KeycloakAdminEndpoint {
 }
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, MatTableModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    EditUserRolesDialogComponent,
+  ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
 })
@@ -39,7 +52,7 @@ export class UsersComponent {
   allClients: any[] = [];
   clientsToGetRolesFrom: any[] = ['realm-management'];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private dialog: MatDialog) {}
 
   async ngOnInit() {
     this.users = [];
@@ -162,5 +175,14 @@ export class UsersComponent {
         user.roles = []; // Ensure roles is always defined
       }
     }
+  }
+
+  editUserRoles(user: any) {
+    // Logic to edit user roles
+    console.log('Edit roles for user:', user);
+    const dialogRef = this.dialog.open(EditUserRolesDialogComponent, {
+      width: '400px',
+      data: { user, allRoles: this.allRoles },
+    });
   }
 }
