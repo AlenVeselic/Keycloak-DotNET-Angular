@@ -9,7 +9,9 @@ import { lastValueFrom } from 'rxjs';
 enum KeycloakAdminEndpoint {
   VIEW_USERS = 'http://localhost:28080/admin/realms/my-realm/users',
   USER_ROLES = 'http://localhost:28080/admin/realms/my-realm/users/{userId}/role-mappings',
-  ALL_ROLES = 'http://localhost:28080/admin/realms/my-realm/clients/{client-uuid}/roles',
+  ALL_REALM_ROLES = 'http://localhost:28080/admin/realms/my-realm/roles',
+  ALL_CLIENT_ROLES = 'http://localhost:28080/admin/realms/my-realm/clients/{client-uuid}/roles',
+  ALL_CLIENTS = 'http://localhost:28080/admin/realms/my-realm/clients',
 }
 @Component({
   selector: 'app-users',
@@ -34,6 +36,8 @@ export class UsersComponent {
   todoColumns: string[] = ['requiredActions'];
 
   allRoles: any[] = [];
+  allClients: any[] = [];
+  clientsToGetRolesFrom: any[] = ['realm-management'];
 
   constructor(private http: HttpClient) {}
 
@@ -47,22 +51,6 @@ export class UsersComponent {
     let allRoles: any = [];
 
     try {
-      allRoles = await lastValueFrom(
-        this.http.get<any[]>(
-          KeycloakAdminEndpoint.ALL_ROLES.replace(
-            '{client-uuid}',
-            'my-client-id'
-          )
-        )
-      );
-      this.allRoles = allRoles;
-    } catch (error) {
-      console.error('Error fetching roles:', error);
-      this.usersError = true;
-      return;
-    }
-
-    try {
       users = await lastValueFrom(
         this.http.get<any[]>(KeycloakAdminEndpoint.VIEW_USERS)
       );
@@ -73,6 +61,49 @@ export class UsersComponent {
       return;
     }
 
+    let clientIds = [];
+    try {
+      this.allClients = await lastValueFrom(
+        this.http.get<any[]>(KeycloakAdminEndpoint.ALL_CLIENTS)
+      );
+      this.allClients = this.allClients.filter((client) =>
+        this.clientsToGetRolesFrom.includes(client.clientId)
+      );
+      clientIds = this.allClients.map((client) => client.id);
+    } catch (error) {
+      console.error('Error fetching clients:', error);
+      this.usersError = true;
+      return;
+    }
+
+    try {
+      let realmRoles = await lastValueFrom(
+        this.http.get<any[]>(KeycloakAdminEndpoint.ALL_REALM_ROLES)
+      );
+      this.allRoles.push(...realmRoles);
+    } catch (error) {
+      console.error('Error fetching realm roles:', error);
+      this.usersError = true;
+      return;
+    }
+
+    try {
+      for (const clientUUID of clientIds) {
+        let clientRoles = await lastValueFrom(
+          this.http.get<any[]>(
+            KeycloakAdminEndpoint.ALL_CLIENT_ROLES.replace(
+              '{client-uuid}',
+              clientUUID
+            )
+          )
+        );
+        this.allRoles.push(...clientRoles);
+      }
+    } catch (error) {
+      console.error('Error fetching client roles:', error);
+      this.usersError = true;
+      return;
+    }
     this.users = users;
     if (this.users.length > 0) {
       delete this.users[0]['userProfileMetadata'];
