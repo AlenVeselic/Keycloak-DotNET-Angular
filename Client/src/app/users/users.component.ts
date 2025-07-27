@@ -9,6 +9,7 @@ import { lastValueFrom } from 'rxjs';
 enum KeycloakAdminEndpoint {
   VIEW_USERS = 'http://localhost:28080/admin/realms/my-realm/users',
   USER_ROLES = 'http://localhost:28080/admin/realms/my-realm/users/{userId}/role-mappings',
+  ALL_ROLES = 'http://localhost:28080/admin/realms/my-realm/clients/{client-uuid}/roles',
 }
 @Component({
   selector: 'app-users',
@@ -32,6 +33,8 @@ export class UsersComponent {
 
   todoColumns: string[] = ['requiredActions'];
 
+  allRoles: any[] = [];
+
   constructor(private http: HttpClient) {}
 
   async ngOnInit() {
@@ -41,6 +44,23 @@ export class UsersComponent {
     this.usersError = false;
 
     let users: any = [];
+    let allRoles: any = [];
+
+    try {
+      allRoles = await lastValueFrom(
+        this.http.get<any[]>(
+          KeycloakAdminEndpoint.ALL_ROLES.replace(
+            '{client-uuid}',
+            'my-client-id'
+          )
+        )
+      );
+      this.allRoles = allRoles;
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      this.usersError = true;
+      return;
+    }
 
     try {
       users = await lastValueFrom(

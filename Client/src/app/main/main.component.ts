@@ -15,7 +15,7 @@ enum UserRole {
   styleUrl: './main.component.css',
 })
 export class MainComponent {
-  authenticated = false;
+  authenticated: boolean | undefined = false;
   isUser = false;
   isAdmin = false;
 

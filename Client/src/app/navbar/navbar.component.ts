@@ -5,22 +5,21 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-    selector: 'app-navbar',
-    imports: [
-        CommonModule,
-        RouterModule
-    ],
-    templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.css'
+  selector: 'app-navbar',
+  imports: [CommonModule, RouterModule],
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  authenticated: boolean;
+  authenticated: boolean | undefined;
   isUserManager: boolean;
 
-  constructor(private authService: AuthorizationService, private http: HttpClient) {
+  constructor(
+    private authService: AuthorizationService,
+    private http: HttpClient
+  ) {
     this.authenticated = this.authService.isLoggedIn();
-    this.isUserManager = this.authService.getUserRoles().includes("view-users");
-
+    this.isUserManager = this.authService.getUserRoles().includes('view-users');
   }
 
   login() {
@@ -30,5 +29,4 @@ export class NavbarComponent {
   logout() {
     this.authService.logout();
   }
-
 }
