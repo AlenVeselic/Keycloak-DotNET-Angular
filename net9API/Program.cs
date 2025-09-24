@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
+using System.Security.Claims;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,9 +55,30 @@ builder.Services.AddAuthentication(options =>
 {
     o.Authority = builder.Configuration["Jwt:Authority"];
     o.Audience = builder.Configuration["Jwt:Audience"];
+    o.SaveToken = true;
     o.RequireHttpsMetadata = false;
     o.Events = new JwtBearerEvents()
     {
+        OnTokenValidated = c =>
+        {
+            User.Models.UserContext dbContext = c.HttpContext.RequestServices.GetRequiredService<User.Models.UserContext>();
+            var jwtUserIdentifier = c.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var _user = dbContext.Users.ToList().FirstOrDefault(u => u.Id.ToString() == jwtUserIdentifier);
+            if (_user == null)
+            {
+                Console.WriteLine("New user detected. Adding to database.");
+
+                dbContext.Users.Add(new User.Models.User
+                {
+                    Id = Guid.Parse(jwtUserIdentifier),
+                    Bio = "The new user has no bio yet."
+                });
+
+                dbContext.SaveChanges();
+            }
+            // If you want to add some logic on successful authentication, add here.
+            return Task.CompletedTask;
+        },
         OnAuthenticationFailed = c =>
         {
             c.NoResult();
@@ -81,6 +105,7 @@ builder.Services
     });
 
 builder.Services.AddOpenApi();
+builder.Services.AddDbContext<User.Models.UserContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("DBConnection")));
 
 var app = builder.Build();
 
