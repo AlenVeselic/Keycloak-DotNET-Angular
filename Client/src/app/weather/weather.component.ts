@@ -1,10 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-
-enum RestApiEndpoint {
-  WEATHER_FORECAST = 'http://localhost:5159/weatherforecast',
-}
+import { RestApiEndpoint } from '../_rest/APIEndpoint';
 
 @Component({
   selector: 'app-weather',

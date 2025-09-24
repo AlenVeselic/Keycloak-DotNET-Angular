@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "label": "Docker Folder 2",
+      "label": "RUN KEYCLOAK",
       "type": "process",
       "command": "docker",
       "args": ["compose", "up"],
