@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "label": "RUN KEYCLOAK",
+      "label": "RUN Docker",
       "type": "process",
       "command": "docker",
       "args": ["compose", "up"],
@@ -38,7 +38,7 @@
     },
     {
       "label": "Run all projects",
-      "dependsOn": ["Docker Folder 2", "NPM Start", "C# API Debug"],
+      "dependsOn": ["Run Docker", "NPM Start", "C# API Debug"],
       "dependsOrder": "parallel",
       "type": "shell"
     }
