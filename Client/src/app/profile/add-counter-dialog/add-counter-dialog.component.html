@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Create counter</h2>
+<mat-dialog-content>
+  <p>Create counter</p>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="newCounterName" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="onNoClick()">Cancel</button>
+  <button matButton (click)="saveChanges()" cdkFocusInitial>Create</button>
+</mat-dialog-actions>
