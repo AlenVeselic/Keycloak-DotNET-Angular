@@ -61,7 +61,7 @@ builder.Services.AddAuthentication(options =>
     {
         OnTokenValidated = c =>
         {
-            User.Models.UserContext dbContext = c.HttpContext.RequestServices.GetRequiredService<User.Models.UserContext>();
+            DBContext.AppDBContext dbContext = c.HttpContext.RequestServices.GetRequiredService<DBContext.AppDBContext>();
             var jwtUserIdentifier = c.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
             var _user = dbContext.Users.ToList().FirstOrDefault(u => u.Id.ToString() == jwtUserIdentifier);
             if (_user == null)
@@ -105,7 +105,7 @@ builder.Services
     });
 
 builder.Services.AddOpenApi();
-builder.Services.AddDbContext<User.Models.UserContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("DBConnection")));
+builder.Services.AddDbContext<DBContext.AppDBContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("DBConnection")));
 
 var app = builder.Build();
 

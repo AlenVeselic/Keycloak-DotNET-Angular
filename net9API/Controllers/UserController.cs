@@ -11,9 +11,9 @@ public class UserController : ControllerBase
 {
 
     private readonly ILogger<WeatherForecastController> _logger;
-    private readonly User.Models.UserContext _dbContext;
+    private readonly DBContext.AppDBContext _dbContext;
 
-    public UserController(ILogger<WeatherForecastController> logger, User.Models.UserContext dbContext)
+    public UserController(ILogger<WeatherForecastController> logger, DBContext.AppDBContext dbContext)
     {
         _logger = logger;
         _dbContext = dbContext;

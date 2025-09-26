@@ -11,9 +11,9 @@ public class CounterController : ControllerBase
 {
 
     private readonly ILogger<WeatherForecastController> _logger;
-    private readonly Counter.Models.CounterContext _dbContext;
+    private readonly DBContext.AppDBContext _dbContext;
 
-    public CounterController(ILogger<WeatherForecastController> logger, Counter.Models.CounterContext dbContext)
+    public CounterController(ILogger<WeatherForecastController> logger, DBContext.AppDBContext dbContext)
     {
         _logger = logger;
         _dbContext = dbContext;
