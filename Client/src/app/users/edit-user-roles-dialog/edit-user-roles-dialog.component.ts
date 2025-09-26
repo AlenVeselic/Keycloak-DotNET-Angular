@@ -33,7 +33,6 @@ export interface DialogData {
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
   templateUrl: './edit-user-roles-dialog.component.html',
   styleUrl: './edit-user-roles-dialog.component.css',
