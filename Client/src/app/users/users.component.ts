@@ -20,7 +20,6 @@ import { KeycloakAdminEndpoint } from '../_auth/models/keycloak-admin-endpoint';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    EditUserRolesDialogComponent,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
