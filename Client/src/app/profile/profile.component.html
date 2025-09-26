@@ -1,8 +1,17 @@
-<p>profile works!</p>
-
 @if (profileData){
 <p>
   Your id is: {{ profileData.id }} <br />
   Your bio is: {{ profileData.bio }} <br />
 </p>
+} @if(counterData && counterData.length > 0){ @for(counter of counterData; track
+counter.id){
+<p>
+  Counter ID: {{ counter.id }} <br />
+  Counter Name: {{ counter.name }} <br />
+  Counter Value: {{ counter.amount }} <br />
+  <button (click)="incrementCounter(counter.id)">Increment</button>
+</p>
+} }@else{
+<div>No counters available. Would you like to add one?</div>
 }
+<button (click)="createCounter()">Add counter +</button>
